@@ -1,0 +1,126 @@
+project_name: feishu2md
+before:
+  hooks:
+    - go mod tidy
+builds:
+  - id: feishu2md-linux-amd64
+    binary: build/feishu2md
+    main: ./cmd
+    hooks:
+      post:
+        - upx --best --lzma -v --no-progress {{ .Path }}
+    ldflags:
+      - -X main.commit={{.Commit}}
+      - -X main.date={{.Date}}
+      - -s
+      - -w
+      - -extldflags "-static"
+    tags:
+      - musl
+      - netgo
+      - osusergo
+    goos:
+      - linux
+    goarch:
+      - amd64
+  - id: feishu2md-linux-arm64
+    binary: build/feishu2md
+    main: ./cmd
+    hooks:
+      post:
+        - upx --best --lzma -v --no-progress {{ .Path }}
+    ldflags:
+      - -X main.commit={{.Commit}}
+      - -X main.date={{.Date}}
+      - -s
+      - -w
+      - -extldflags "-static"
+    tags:
+      - musl
+      - netgo
+      - osusergo
+    goos:
+      - linux
+    goarch:
+      - amd64
+  - id: feishu2md-windows-amd64
+    binary: build/feishu2md
+    main: ./cmd
+    ldflags:
+      - -X main.commit={{.Commit}}
+      - -X main.date={{.Date}}
+      - -s
+      - -w
+      - -extldflags "-static"
+    tags:
+      - musl
+      - netgo
+      - osusergo
+    goos:
+      - windows
+    goarch:
+      - amd64
+  - id: feishu2md-darwin-arm64
+    binary: build/feishu2md
+    main: ./cmd
+    ldflags:
+      - -X main.commit={{.Commit}}
+      - -X main.date={{.Date}}
+      - -s
+      - -w
+      - -extldflags "-static"
+    tags:
+      - musl
+      - netgo
+      - osusergo
+    goos:
+      - darwin
+    goarch:
+      - arm64
+  - id: feishu2md-darwin-amd64
+    binary: build/feishu2md
+    main: ./cmd
+    gcflags:
+      - all=-N -l
+    ldflags:
+      - -extldflags "-static"
+    tags:
+      - musl
+      - netgo
+      - osusergo
+    goos:
+      - darwin
+    goarch:
+      - amd64
+archives:
+  - name_template: "{{ .ProjectName }}-{{ .Os }}-{{ .Arch }}-v{{ .Version }}"
+    id: feishu2md
+    builds:
+      - feishu2md-windows-amd64
+      - feishu2md-darwin-arm64
+      - feishu2md-darwin-amd64
+      - feishu2md-linux-arm64
+      - feishu2md-linux-amd64
+    files:
+      - dist/*
+    format_overrides:
+      - format: zip
+        goos: windows
+checksum:
+  name_template: "checksums.txt"
+snapshot:
+  name_template: "{{ incpatch .Version }}"
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"
+release:
+  github:
+    owner: LinkLeong
+    name: feishu2md
+  draft: true
+  prerelease: auto
+  mode: replace
+  name_template: "v{{ .Version }}"
