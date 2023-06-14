@@ -6,13 +6,7 @@
 [![Docker - feishu2md](https://img.shields.io/badge/Docker-feishu2md-2496ed?logo=docker&logoColor=white)](https://hub.docker.com/repository/docker/wwwsine/feishu2md)
 [![Render - feishu2md](https://img.shields.io/badge/Render-feishu2md-4cfac9?logo=render&logoColor=white)](https://feishu2md.onrender.com)
 
-这是一个下载飞书文档为 Markdown 文件的工具，使用 Go 语言实现。
-
-**请看这里：招募有需求和有兴趣的开发者，共同探讨开发维护，有兴趣请联系。**
-
-## 动机
-
-[《一日一技 | 我开发的这款小工具，轻松助你将飞书文档转为 Markdown》](https://sspai.com/post/73386)
+这是一个下载飞书文档为 Markdown 文件的工具，使用 Go 语言实现。 在https://github.com/Wsine/feishu2md项目上进行的修改,自己使用顺便共享.
 
 ## 获取 API Token
 
@@ -27,10 +21,11 @@
   - 「查看、评论和下载云空间中所有文件」权限 `drive:drive:readonly`
   - 「查看和下载云空间中的文件」权限 `drive:file:readonly`
 - 打开凭证与基础信息，获取 App ID 和 App Secret
+### wiki专用
+- 新建群组,把应用加入到群内(添加机器人选项)
+- 在知识库设置里面->成员设置->把群组添加进来.
 
-## 如何使用
-
-注意：飞书旧版文档的下载工具已决定不再维护，但分支 [v1_support](https://github.com/Wsine/feishu2md/tree/v1_support) 仍可使用，对应的归档为 [v1.4.0](https://github.com/Wsine/feishu2md/releases/tag/v1.4.0)，请知悉。
+[请我喝咖啡](https://bmc.link/linkliang)
 
 <details>
   <summary>命令行版本</summary>
@@ -91,45 +86,9 @@
    ```
 </details>
 
-<details>
-  <summary>Docker版本</summary>
-  
-  Docker 镜像：[wwwsine/feishu2md](https://hub.docker.com/repository/docker/wwwsine/feishu2md)
-
-   Docker 命令：`docker run -it --rm -p 8080:8080 -e FEISHU_APP_ID=<your id> -e FEISHU_APP_SECRET=<your secret> -e GIN_MODE=release wwwsine/feishu2md`
-
-   Docker Compose:
-
-   ```yml
-   # docker-compose.yml
-   version: '3'
-   services:
-     feishu2md:
-       image: wwwsine/feishu2md
-       environment:
-         FEISHU_APP_ID: <your id>
-         FEISHU_APP_SECRET: <your secret>
-         GIN_MODE: release
-       ports:
-         - "8080:8080"
-   ```
-   
-   启动服务 `docker compose up -d`
-
-   然后访问 https://127.0.0.1:8080 粘贴文档链接即可，文档链接可以通过 **分享 > 开启链接分享 > 复制链接** 获得。
-</details>
-   
-<details>
-  <summary>在线版本</summary>
-   
-  访问 https://feishu2md.onrender.com/ 粘贴文档链接即可，文档链接可以通过 **分享 > 开启链接分享 > 复制链接** 获得。
-  
-  我使用个人的测试 API Token 部署了一个 Unstable 版本在 Render 平台上，该版本不会保存任何的文档资料和图片在容器中，直接通过 HTTP 从内存中返回压缩包文件，但是 Render 平台的 Log 可能会记录一些 HTTP 信息。
-   
-   在版本仅供不在意隐私或懒于配置的用户临时使用，Render 平台使用免费配额，不保证高可用性，信任链全靠开源代码，请自行斟酌。
-</details>
 
 ## 感谢
 
 - [chyroc/lark](https://github.com/chyroc/lark)
 - [chyroc/lark_docs_md](https://github.com/chyroc/lark_docs_md)
+- [Wsine/feishu2md](https://github.com/Wsine/feishu2md)

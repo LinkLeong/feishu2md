@@ -78,7 +78,7 @@ func handleUrlArgument(url string) error {
 	return nil
 }
 
-func getSpace(spaceId string) error {
+func getSpace(spaceId string, rang bool) error {
 	configPath, err := core.GetConfigFilePath()
 	utils.CheckErr(err)
 	config, err := core.ReadConfigFromFile(configPath)
@@ -101,16 +101,17 @@ func getSpace(spaceId string) error {
 		return err
 	}
 
-	// 业务处理
-	fmt.Println(resp.Data)
 	for _, v := range resp.Data.Items {
 		err := download(*v.ObjToken)
 		if err != nil {
 			fmt.Println(err, "objtoken", *v.ObjToken)
 		}
-		if *v.HasChild {
-			getChildSpace(*v.SpaceId, *v.NodeToken)
+		if rang {
+			if *v.HasChild {
+				getChildSpace(*v.SpaceId, *v.NodeToken)
+			}
 		}
+
 	}
 	return nil
 }

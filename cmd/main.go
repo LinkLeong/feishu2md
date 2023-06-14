@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"os"
+	"strconv"
 	"strings"
 
 	"github.com/urfave/cli/v2"
@@ -61,11 +62,12 @@ func main() {
 			},
 			{
 				Name:  "space",
-				Usage: "space Id",
+				Usage: "space Id  rang(true/false)",
 				Action: func(ctx *cli.Context) error {
 					if ctx.NArg() > 0 {
 						url := ctx.Args().Get(0)
-						return getSpace(url)
+						rang, _ := strconv.ParseBool(ctx.Args().Get(1))
+						return getSpace(url, rang)
 					} else {
 						cli.ShowCommandHelp(ctx, "dump")
 					}
